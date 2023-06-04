@@ -1,0 +1,11 @@
+.contactForm {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.contactFormInput {
+  padding: 10px;
+}
+.contactFormButton {
+  padding: 10px;
+}
