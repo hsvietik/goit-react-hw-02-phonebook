@@ -17,13 +17,9 @@ export class App extends Component {
     ],
     filter: '',
   };
-  addContact = evt => {
-    evt.preventDefault();
-    const form = evt.currentTarget;
-    const nameToAdd = form.elements.name.value;
-    const numberToAdd = form.elements.number.value;
+  addContact = (nameToAdd, numberToAdd) => {
     if (this.state.contacts.find(({ name }) => name === nameToAdd)) {
-      Notiflix.Notify.failure(`${nameToAdd} is already in contacts.`);
+      Notiflix.Notify.failure(`${nameToAdd} is already in contacts.`, 300);
     } else {
       this.setState(prevState => ({
         contacts: [
@@ -32,14 +28,11 @@ export class App extends Component {
         ],
       }));
     }
-    form.elements.name.value = '';
-    form.elements.number.value = '';
   };
-  findContact = evt => {
-    this.setState({ filter: evt.currentTarget.value });
+  findContact = filter => {
+    this.setState({ filter: filter.toLowerCase() });
   };
-  deleteContact = evt => {
-    let idToDelete = evt.currentTarget.id;
+  deleteContact = idToDelete => {
     this.setState(prevState => ({
       contacts: prevState.contacts.filter(({ id }) => id !== idToDelete),
     }));

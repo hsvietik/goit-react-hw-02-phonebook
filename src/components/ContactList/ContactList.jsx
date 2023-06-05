@@ -15,7 +15,7 @@ export const ContactList = ({ contacts, filter, deleteContact }) => {
                 className={css.deleteButton}
                 type="button"
                 id={id}
-                onClick={deleteContact}
+                onClick={evt => deleteContact(evt.currentTarget.id)}
               >
                 <FaTrash className={css.deleteIcon} />
               </button>

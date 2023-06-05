@@ -6,7 +6,7 @@ export const Filter = ({ findContact }) => {
       <input
         className={css.nameSearchInput}
         type="text"
-        onChange={findContact}
+        onChange={evt => findContact(evt.currentTarget.value)}
       />
     </div>
   );
