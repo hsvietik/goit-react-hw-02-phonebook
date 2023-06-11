@@ -17,21 +17,29 @@ export class App extends Component {
     ],
     filter: '',
   };
+
   addContact = (nameToAdd, numberToAdd) => {
-    if (this.state.contacts.find(({ name }) => name === nameToAdd)) {
-      Notiflix.Notify.failure(`${nameToAdd} is already in contacts.`, 300);
-    } else {
-      this.setState(prevState => ({
-        contacts: [
-          ...prevState.contacts,
-          { id: nanoid(), name: nameToAdd, number: numberToAdd },
-        ],
-      }));
+    const contactExists = this.state.contacts.find(
+      ({ name }) => name === nameToAdd
+    );
+    if (contactExists) {
+      return Notiflix.Notify.failure(
+        `${nameToAdd} is already in contacts.`,
+        300
+      );
     }
+    this.setState(prevState => ({
+      contacts: [
+        ...prevState.contacts,
+        { id: nanoid(), name: nameToAdd, number: numberToAdd },
+      ],
+    }));
   };
-  findContact = filter => {
+
+  changeFilter = filter => {
     this.setState({ filter: filter.toLowerCase() });
   };
+
   deleteContact = idToDelete => {
     this.setState(prevState => ({
       contacts: prevState.contacts.filter(({ id }) => id !== idToDelete),
@@ -39,15 +47,18 @@ export class App extends Component {
   };
 
   render() {
+    const { contacts, filter } = this.state;
+    let filteredContacts = contacts.filter(({ name }) =>
+      name.toLowerCase().includes(filter)
+    );
     return (
       <div className={css.container}>
         <h1>Phonebook</h1>
         <ContactForm addContact={this.addContact} />
         <h2>Contacts</h2>
-        <Filter findContact={this.findContact} />
+        <Filter onChange={this.changeFilter} />
         <ContactList
-          contacts={this.state.contacts}
-          filter={this.state.filter}
+          contacts={filteredContacts}
           deleteContact={this.deleteContact}
         />
       </div>

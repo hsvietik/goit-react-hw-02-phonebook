@@ -1,4 +1,5 @@
 .contactForm {
+  width: 300px;
   display: inline-flex;
   flex-direction: column;
   gap: 10px;
